@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Baking Pan Swap Calculator</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+
+<style>
+/* Additional specific utility overrides */
+.form-input {
+  padding: 10px 14px;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  background: var(--glass-bg-2);
+  border: 1px solid var(--hairline-2);
+  color: var(--text);
+  border-radius: 10px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus {
+  border-color: var(--accent);
+}
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+.input-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+select.form-input {
+  appearance: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="wash"></div>
+<div class="grain"></div>
+
+<main class="page" style="display: flex; gap: 32px; flex-wrap: wrap;">
+  
+  <!-- Sidebar -->
+  <aside style="width: 260px; flex-shrink: 0;">
+    <div class="glass" style="padding: 24px; position: sticky; top: 40px;">
+       <h3 style="font-family: var(--font-ui); font-size: 13px; font-weight: 600; margin-top: 0; margin-bottom: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-soft);">Featured Network</h3>
+       <a href="https://builtbyjoshstudio.com/index.html" target="_blank" style="display: block; margin-bottom: 14px; border-radius: 10px; overflow: hidden; border: 1px solid var(--hairline-2); transition: transform 0.2s;">
+         <img src="studio-link.jpg" style="width: 100%; display: block;" alt="Built By Josh Studio">
+       </a>
+       <a href="https://www.youtube.com/@TalesofInkShadowsStudio" target="_blank" style="display: block; margin-bottom: 14px; border-radius: 10px; overflow: hidden; border: 1px solid var(--hairline-2); transition: transform 0.2s;">
+         <img src="tales-link.jpg" style="width: 100%; display: block;" alt="Tales of Ink & Shadows">
+       </a>
+       <a href="https://tynkrtoolsco.substack.com/" target="_blank" style="display: block; border-radius: 10px; overflow: hidden; border: 1px solid var(--hairline-2); transition: transform 0.2s;">
+         <img src="tynkr-link.jpg" style="width: 100%; display: block;" alt="Tynkr Tools & Co">
+       </a>
+    </div>
+  </aside>
+
+  <!-- Central Panel -->
+  <div style="flex: 1; min-width: 300px;">
+    <header class="glass hero">
+      <div style="flex:1; min-width: 0">
+         <div class="meta">
+           <span class="pill live">● Utilities</span>
+           <span>Tynkr Tools & Co</span>
+         </div>
+         <h1>Pan Swap Calculator</h1>
+         <p>Easily calculate recipe multipliers and adjust bake times when switching between different baking pan shapes and sizes.</p>
+      </div>
+      <div class="theme-switch" role="tablist" aria-label="Theme">
+        <button data-set-theme="light" class="on"><span class="sw" style="background: #f7f4f2"></span>Light</button>
+        <button data-set-theme="mist"><span class="sw" style="background: #3f454c"></span>Mist</button>
+        <button data-set-theme="dark"><span class="sw" style="background: #0c0813"></span>Dark</button>
+      </div>
+    </header>
+
+    <div class="glass type-card" style="margin-bottom: 24px;">
+       <div class="role">1. Original Pan</div>
+       <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+          <div class="input-group">
+            <span class="input-label">Shape</span>
+            <select id="orig-shape" class="form-input">
+              <option value="round">Round</option>
+              <option value="square">Square</option>
+              <option value="rectangular">Rectangular</option>
+            </select>
+          </div>
+       </div>
+       <div id="orig-dims" style="display: flex; gap: 16px;">
+          <!-- dynamic inputs injected by JS -->
+       </div>
+    </div>
+
+    <div class="glass type-card" style="margin-bottom: 24px;">
+       <div class="role">2. Target Pan</div>
+       <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+          <div class="input-group">
+            <span class="input-label">Shape</span>
+            <select id="target-shape" class="form-input">
+              <option value="round">Round</option>
+              <option value="square">Square</option>
+              <option value="rectangular">Rectangular</option>
+            </select>
+          </div>
+       </div>
+       <div id="target-dims" style="display: flex; gap: 16px;">
+          <!-- dynamic inputs injected by JS -->
+       </div>
+    </div>
+
+    <div class="glass anatomy" style="margin-bottom: 24px;">
+       <div class="anatomy-stage" style="display: flex; align-items: center; justify-content: center;">
+           <div style="text-align: center;">
+              <div style="font-family: var(--font-mono); font-size: 14px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Recipe Multiplier</div>
+              <div id="multiplier-output" style="font-family: var(--font-display); font-size: 64px; font-weight: 800; color: var(--accent); line-height: 1;">1.00x</div>
+           </div>
+       </div>
+       <div class="anatomy-labels">
+          <div class="glass-lite anatomy-row">
+            <div class="ix">∑</div>
+            <div>
+              <h4>Area Comparison</h4>
+              <p id="area-output">Original: 0.0 sq in | Target: 0.0 sq in</p>
+            </div>
+          </div>
+          <div class="glass-lite anatomy-row">
+            <div class="ix">⏱</div>
+            <div>
+              <h4>Bake Time Warning</h4>
+              <p id="time-output">Select pan dimensions to see adjustent warnings.</p>
+            </div>
+          </div>
+       </div>
+    </div>
+
+    <div class="foot">
+      <span>© 2026 Built by Josh Studio LLC. All rights reserved. Tynkr Tools & Co is a brand of Built by Josh Studio LLC.</span>
+    </div>
+  </div>
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
