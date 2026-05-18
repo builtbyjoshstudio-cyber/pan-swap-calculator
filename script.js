@@ -30,7 +30,9 @@ const unitToggle = document.getElementById('unit-toggle');
 
 function getInputsHtml(shape, prefix) {
   const unitStr = unitToggle && unitToggle.checked ? '(cm)' : '(in)';
-  if (shape === 'round') {
+  if (shape === 'muffin' || shape === 'bundt') {
+    return '';
+  } else if (shape === 'round') {
     return `
       <div class="input-group">
         <span class="input-label">Diameter ${unitStr}</span>
@@ -68,14 +70,23 @@ function updateInputs() {
 }
 
 function getArea(shape, prefix) {
-  const dim1 = parseFloat(document.getElementById(`${prefix}-dim1`).value) || 0;
+  if (shape === 'muffin') {
+    return (unitToggle && unitToggle.checked) ? 412 : 64;
+  } else if (shape === 'bundt') {
+    return (unitToggle && unitToggle.checked) ? 754 : 117;
+  }
+
+  const dim1El = document.getElementById(`${prefix}-dim1`);
+  const dim1 = dim1El ? parseFloat(dim1El.value) || 0 : 0;
+  
   if (shape === 'round') {
     const radius = dim1 / 2;
     return Math.PI * radius * radius;
   } else if (shape === 'square') {
     return dim1 * dim1;
   } else if (shape === 'rectangular') {
-    const dim2 = parseFloat(document.getElementById(`${prefix}-dim2`).value) || 0;
+    const dim2El = document.getElementById(`${prefix}-dim2`);
+    const dim2 = dim2El ? parseFloat(dim2El.value) || 0 : 0;
     return dim1 * dim2;
   }
   return 0;
