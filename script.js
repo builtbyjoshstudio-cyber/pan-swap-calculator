@@ -9,8 +9,14 @@ switchBtns.forEach(b => b.addEventListener('click', () => setTheme(b.dataset.set
 
 try {
   const stored = localStorage.getItem('tynkr-glass-theme');
-  if (stored && ['light','mist','dark'].includes(stored)) setTheme(stored);
-} catch (e) {}
+  if (stored && ['light','mist','dark'].includes(stored)) {
+    setTheme(stored);
+  } else {
+    setTheme('dark');
+  }
+} catch (e) {
+  setTheme('dark');
+}
 
 // Calculator Logic
 const origShape = document.getElementById('orig-shape');
@@ -120,3 +126,21 @@ if(unitToggle) {
 
 // Initialize
 updateInputs();
+
+const copyBtn = document.getElementById('copy-btn');
+if (copyBtn) {
+  copyBtn.addEventListener('click', () => {
+    const multi = multiplierOutput.textContent;
+    const area = areaOutput.textContent;
+    const time = timeOutput.textContent;
+    const summary = `Recipe Multiplier: ${multi}. Area Comparison: ${area}. Note: ${time}`;
+    
+    navigator.clipboard.writeText(summary).then(() => {
+      const origText = copyBtn.textContent;
+      copyBtn.textContent = 'Copied!';
+      setTimeout(() => {
+        copyBtn.textContent = origText;
+      }, 2000);
+    });
+  });
+}
