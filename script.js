@@ -20,28 +20,30 @@ const targetDims = document.getElementById('target-dims');
 const multiplierOutput = document.getElementById('multiplier-output');
 const areaOutput = document.getElementById('area-output');
 const timeOutput = document.getElementById('time-output');
+const unitToggle = document.getElementById('unit-toggle');
 
 function getInputsHtml(shape, prefix) {
+  const unitStr = unitToggle && unitToggle.checked ? '(cm)' : '(in)';
   if (shape === 'round') {
     return `
       <div class="input-group">
-        <span class="input-label">Diameter (in)</span>
+        <span class="input-label">Diameter ${unitStr}</span>
         <input type="number" id="${prefix}-dim1" class="form-input" value="8" min="1" step="0.5">
       </div>`;
   } else if (shape === 'square') {
     return `
       <div class="input-group">
-        <span class="input-label">Side (in)</span>
+        <span class="input-label">Side ${unitStr}</span>
         <input type="number" id="${prefix}-dim1" class="form-input" value="8" min="1" step="0.5">
       </div>`;
   } else if (shape === 'rectangular') {
     return `
       <div class="input-group">
-        <span class="input-label">Length (in)</span>
+        <span class="input-label">Length ${unitStr}</span>
         <input type="number" id="${prefix}-dim1" class="form-input" value="13" min="1" step="0.5">
       </div>
       <div class="input-group">
-        <span class="input-label">Width (in)</span>
+        <span class="input-label">Width ${unitStr}</span>
         <input type="number" id="${prefix}-dim2" class="form-input" value="9" min="1" step="0.5">
       </div>`;
   }
@@ -76,12 +78,13 @@ function getArea(shape, prefix) {
 function calculate() {
   const area1 = getArea(origShape.value, 'orig');
   const area2 = getArea(targetShape.value, 'target');
+  const sqStr = unitToggle && unitToggle.checked ? 'sq cm' : 'sq in';
 
   if (area1 > 0 && area2 > 0) {
     const multiplier = area2 / area1;
     // format to 2 decimal places
     multiplierOutput.textContent = (Math.round(multiplier * 100) / 100).toFixed(2) + 'x';
-    areaOutput.textContent = `Original: ${Math.round(area1 * 10) / 10} sq in | Target: ${Math.round(area2 * 10) / 10} sq in`;
+    areaOutput.textContent = `Original: ${Math.round(area1 * 10) / 10} ${sqStr} | Target: ${Math.round(area2 * 10) / 10} ${sqStr}`;
     
     // Warning logic
     if (multiplier > 1.1) {
@@ -96,13 +99,24 @@ function calculate() {
     }
   } else {
     multiplierOutput.textContent = '0.00x';
-    areaOutput.textContent = 'Original: 0.0 sq in | Target: 0.0 sq in';
+    areaOutput.textContent = `Original: 0.0 ${sqStr} | Target: 0.0 ${sqStr}`;
     timeOutput.textContent = 'Enter valid dimensions to calculate.';
   }
 }
 
 origShape.addEventListener('change', updateInputs);
 targetShape.addEventListener('change', updateInputs);
+if(unitToggle) {
+  unitToggle.addEventListener('change', () => {
+    const unitStr = unitToggle.checked ? '(cm)' : '(in)';
+    document.querySelectorAll('.input-label').forEach(label => {
+      if(label.textContent.includes('(in)') || label.textContent.includes('(cm)')) {
+        label.textContent = label.textContent.replace(/\(in\)|\(cm\)/, unitStr);
+      }
+    });
+    calculate();
+  });
+}
 
 // Initialize
 updateInputs();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -104,11 +104,22 @@ select.form-input {
          <p>Easily calculate recipe multipliers and adjust bake times when switching between different baking pan shapes and sizes.</p>
       </div>
       <div class="theme-switch" role="tablist" aria-label="Theme">
-        <button data-set-theme="light" class="on"><span class="sw" style="background: #f7f4f2"></span>Light</button>
+        <button data-set-theme="light"><span class="sw" style="background: #f7f4f2"></span>Light</button>
         <button data-set-theme="mist"><span class="sw" style="background: #3f454c"></span>Mist</button>
-        <button data-set-theme="dark"><span class="sw" style="background: #0c0813"></span>Dark</button>
+        <button data-set-theme="dark" class="on"><span class="sw" style="background: #0c0813"></span>Dark</button>
       </div>
     </header>
+
+    <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
+        <div class="unit-toggle-container glass-lite" style="padding: 12px 24px; border-radius: 99px;">
+            <span class="unit-label">Inches</span>
+            <label class="switch">
+                <input type="checkbox" id="unit-toggle">
+                <span class="slider round"></span>
+            </label>
+            <span class="unit-label">Centimeters</span>
+        </div>
+    </div>
 
     <div class="glass type-card" style="margin-bottom: 24px;">
        <div class="role">1. Original Pan</div>
