@@ -764,11 +764,5 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
-/* Background Image Adjustment */
-body {
-    background-image: url('https://images.unsplash.com/photo-1556910103-1c02745a8e41?q=80&w=2070&auto=format&fit=crop');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
+
 
