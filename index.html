@@ -126,13 +126,9 @@ select.form-input option {
     </header>
 
     <div style="display: flex; justify-content: flex-end; margin-bottom: 24px;">
-        <div class="unit-toggle-container glass-lite" style="padding: 12px 24px; border-radius: 99px;">
-            <span class="unit-label">Inches</span>
-            <label class="switch">
-                <input type="checkbox" id="unit-toggle">
-                <span class="slider round"></span>
-            </label>
-            <span class="unit-label">Centimeters</span>
+        <div class="tynkr-unit-toggle-wrapper">
+            <button type="button" id="unit-imperial" class="tynkr-unit-btn active">Inches</button>
+            <button type="button" id="unit-metric" class="tynkr-unit-btn">Centimeters</button>
         </div>
     </div>
 

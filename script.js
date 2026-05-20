@@ -26,7 +26,15 @@ const targetDims = document.getElementById('target-dims');
 const multiplierOutput = document.getElementById('multiplier-output');
 const areaOutput = document.getElementById('area-output');
 const timeOutput = document.getElementById('time-output');
-const unitToggle = document.getElementById('unit-toggle');
+const unitImperialBtn = document.getElementById('unit-imperial');
+const unitMetricBtn = document.getElementById('unit-metric');
+let currentUnit = 'imperial';
+
+const unitToggle = {
+  get checked() {
+    return currentUnit === 'metric';
+  }
+};
 
 function getInputsHtml(shape, prefix) {
   const unitStr = unitToggle && unitToggle.checked ? '(cm)' : '(in)';
@@ -158,17 +166,26 @@ function calculate() {
 
 origShape.addEventListener('change', updateInputs);
 targetShape.addEventListener('change', updateInputs);
-if(unitToggle) {
-  unitToggle.addEventListener('change', () => {
-    const unitStr = unitToggle.checked ? '(cm)' : '(in)';
-    document.querySelectorAll('.input-label').forEach(label => {
-      if(label.textContent.includes('(in)') || label.textContent.includes('(cm)')) {
-        label.textContent = label.textContent.replace(/\(in\)|\(cm\)/, unitStr);
-      }
-    });
-    calculate();
+function setUnitSystem(unit) {
+  currentUnit = unit;
+  if (unit === 'metric') {
+      unitMetricBtn.classList.add('active');
+      unitImperialBtn.classList.remove('active');
+  } else {
+      unitImperialBtn.classList.add('active');
+      unitMetricBtn.classList.remove('active');
+  }
+  const unitStr = (currentUnit === 'metric') ? '(cm)' : '(in)';
+  document.querySelectorAll('.input-label').forEach(label => {
+    if(label.textContent.includes('(in)') || label.textContent.includes('(cm)')) {
+      label.textContent = label.textContent.replace(/\(in\)|\(cm\)/, unitStr);
+    }
   });
+  calculate();
 }
+
+if (unitImperialBtn) unitImperialBtn.addEventListener('click', () => setUnitSystem('imperial'));
+if (unitMetricBtn) unitMetricBtn.addEventListener('click', () => setUnitSystem('metric'));
 
 // Initialize
 updateInputs();
