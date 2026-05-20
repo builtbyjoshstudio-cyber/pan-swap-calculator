@@ -174,6 +174,49 @@ select.form-input option {
        </div>
     </div>
 
+    <details class="glass-lite" style="margin-bottom: 24px; padding: 16px; border-radius: 14px; cursor: pointer; height: auto; overflow: visible;">
+        <summary style="font-family: var(--font-ui); font-size: 15px; font-weight: 600; color: var(--accent); outline: none; list-style: none; display: flex; align-items: center; justify-content: space-between; user-select: none;">
+            <span>Standard Pan Capacities Quick-Ref</span>
+            <span style="font-size: 12px; opacity: 0.7;">▼</span>
+        </summary>
+        <div style="margin-top: 16px; cursor: default; overflow: visible; height: auto;">
+            <table style="width: 100%; border-collapse: collapse; font-family: var(--font-ui); font-size: 13px; color: var(--text);">
+                <thead>
+                    <tr style="border-bottom: 1.5px solid var(--border-light); text-align: left;">
+                        <th style="padding: 8px 12px 8px 0; font-weight: 600; color: var(--text-soft);">Pan Type & Size</th>
+                        <th style="padding: 8px 0 8px 12px; font-weight: 600; color: var(--text-soft); text-align: right;">Capacity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid var(--border-light);">
+                        <td style="padding: 10px 12px 10px 0;">9x13-inch Rectangular Pan</td>
+                        <td style="padding: 10px 0 10px 12px; text-align: right; font-family: var(--font-mono);">~14 Cups (3.3L)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-light);">
+                        <td style="padding: 10px 12px 10px 0;">8x8-inch Square Pan</td>
+                        <td style="padding: 10px 0 10px 12px; text-align: right; font-family: var(--font-mono);">~8 Cups (1.9L)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-light);">
+                        <td style="padding: 10px 12px 10px 0;">9-inch Round Cake Pan</td>
+                        <td style="padding: 10px 0 10px 12px; text-align: right; font-family: var(--font-mono);">~8 Cups (1.9L)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-light);">
+                        <td style="padding: 10px 12px 10px 0;">Standard Loaf Pan (8.5x4.5)</td>
+                        <td style="padding: 10px 0 10px 12px; text-align: right; font-family: var(--font-mono);">~6 Cups (1.4L)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-light);">
+                        <td style="padding: 10px 12px 10px 0;">Standard 12-Cup Muffin Tin</td>
+                        <td style="padding: 10px 0 10px 12px; text-align: right; font-family: var(--font-mono);">~4 Cups (1.0L) total</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--border-light);">
+                        <td style="padding: 10px 12px 10px 0;">10-inch Bundt Pan</td>
+                        <td style="padding: 10px 0 10px 12px; text-align: right; font-family: var(--font-mono);">~12 Cups (2.8L)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+     </details>
+
     <div class="glass anatomy" style="margin-bottom: 24px;">
        <div class="anatomy-stage" style="display: flex; align-items: center; justify-content: center;">
            <div style="text-align: center;">
@@ -196,6 +239,13 @@ select.form-input option {
               <p id="time-output">Select pan dimensions to see adjustent warnings.</p>
             </div>
           </div>
+          <div id="depth-warning-box" class="glass-lite anatomy-row" style="display: none; border-color: var(--warn); background: rgba(224, 184, 90, 0.05); grid-template-columns: 36px minmax(0, 1fr) auto;">
+             <div class="ix" style="color: var(--warn); background: rgba(224, 184, 90, 0.1);">⚠️</div>
+             <div>
+               <h4 style="color: var(--warn); margin: 0 0 2px;">Critical Baking Warning</h4>
+               <p style="font-size: 13px; line-height: 1.5; margin: 0; color: var(--text-main);">The selected pan configuration drastically increases your batter depth. To prevent your cake from overflowing or remaining raw and gummy in the center, reduce your oven temperature by 25°F and extend the baking time by 15 to 20 minutes. Use a toothpick to verify the absolute center before pulling.</p>
+             </div>
+           </div>
        </div>
     </div>
 

@@ -92,6 +92,15 @@ function getArea(shape, prefix) {
   return 0;
 }
 
+function getDim(prefix, index) {
+  const el = document.getElementById(`${prefix}-dim${index}`);
+  let val = el ? parseFloat(el.value) || 0 : 0;
+  if (unitToggle && unitToggle.checked) {
+    val = val / 2.54;
+  }
+  return val;
+}
+
 function calculate() {
   const area1 = getArea(origShape.value, 'orig');
   const area2 = getArea(targetShape.value, 'target');
@@ -114,10 +123,36 @@ function calculate() {
       timeOutput.textContent = 'Similar area. Bake time should remain roughly the same (monitor depth).';
       timeOutput.style.color = 'var(--text-soft)';
     }
+
+    // Depth warning check
+    const isOrigWide = (
+        (origShape.value === 'rectangular' && (area1 / (unitToggle && unitToggle.checked ? 6.4516 : 1)) >= 63) ||
+        (origShape.value === 'square' && getDim('orig', 1) >= 7.9) ||
+        (origShape.value === 'round' && getDim('orig', 1) >= 8.9)
+    );
+    
+    const isTargetDeepNarrow = (
+        (targetShape.value === 'rectangular' && getDim('target', 1) > 0 && getDim('target', 2) > 0 && getDim('target', 2) <= 5.5) ||
+        (targetShape.value === 'round' && getDim('target', 1) > 0 && getDim('target', 1) <= 8)
+    );
+
+    const depthWarningBox = document.getElementById('depth-warning-box');
+    if (depthWarningBox) {
+      if (isOrigWide && isTargetDeepNarrow) {
+        depthWarningBox.style.display = 'grid';
+      } else {
+        depthWarningBox.style.display = 'none';
+      }
+    }
   } else {
     multiplierOutput.textContent = '0.00x';
     areaOutput.textContent = `Original: 0.0 ${sqStr} | Target: 0.0 ${sqStr}`;
     timeOutput.textContent = 'Enter valid dimensions to calculate.';
+    
+    const depthWarningBox = document.getElementById('depth-warning-box');
+    if (depthWarningBox) {
+      depthWarningBox.style.display = 'none';
+    }
   }
 }
 
